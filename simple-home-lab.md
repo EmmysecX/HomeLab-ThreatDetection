@@ -8,36 +8,45 @@ I opted for **VMware** (which I prefer over VirtualBox) and set up **Kali Linux*
 
 The first tool I installed was **Splunk**, a widely-used SIEM (Security Information and Event Management) tool. While the installation on the virtual machine took a while, I ensured everything was fully set up before proceeding with any attacks, as this would allow me to monitor the logs efficiently later on.
 
-**Splunk installation successful**
+![Splunk installation successful](assets/splunkinstall.png)
+*Splunk installation successful*
 
 Next, I installed **Sysmon** to capture telemetry on the Windows machine. With everything in place, I was ready to simulate an attack.
 
-**Sysmon successfully installed**  
-**Sysmon running on my defense machine**
+![Sysmon installation successful](assets/sysmon.png)
+*Sysmon successfully installed* 
+
+![Sysmon running on my windows services](assets/sysmonrun.png)
+*Sysmon running on my defense machine*
 
 ## Day 2: Simulating the Attack
 
 To begin, I scanned the target Windows machine for open ports using **Nmap**. Initially, I couldn't find any open ports, specifically **port 3389 (RDP)**. After troubleshooting and realizing the RDP connection was disabled on my Windows system, I enabled it and reran the scan, which successfully revealed the open port.
 
-**Nmap Scan showing open ports**
+![Nmap Scan showing open ports](assets/nmapscan.png)
+*Nmap Scan showing open ports*
 
 I proceeded to create a **payload** on my attack machine using **Metasploit**. To avoid any interruptions during the process, I temporarily deactivated **Windows Defender** on my target machine.
 
-**Payload created**
+![Payload successfully created with msfvenon](assets/payload.png)
+*Payload created*
 
 Next, I launched the attack using **msfconsole**. After configuring all the necessary settings, the handler was activated, waiting for the test machine to download the malware.
 
-**Reverse TCP handler activated**
+![Reverse TCP hander activated](assets/handlerstart.png)
+*Reverse TCP handler activated*
 
 Then I set up an **HTTP server** to allow the Windows machine to download the malware.
 
 Once ready, I went over to the Windows machine, downloaded the malware via a web browser, and executed it. My browser blocked the download at first, but I bypassed the warning by clicking on "Download insecure file."
 
-**HTTP site for the sample malware**
+![HTTP site showing the malware sample for download](assets/download.png)
+*HTTP site for the sample malware*
 
 After executing the malware, I opened the command prompt to check if there was a connection to my **Kali** machine. And there it was — an established connection between the attack and defense machines!
 
-**Command prompt showing established connection between the two machines**
+![command promot showing established connection between the two machines](assets/netstatannob.png)
+*Command prompt showing established connection between the two machines*
 
 Then I headed back to my **Kali Linux** to see if there was a connection and, guess what? There was! I was able to create a **reverse TCP shell** on the attack machine, check the IP address, and retrieve other information about the defense machine remotely.
 
@@ -45,22 +54,28 @@ Then I headed back to my **Kali Linux** to see if there was a connection and, gu
 
 Returning to my **Kali Linux**, I confirmed that the **reverse TCP shell** was successfully created. I could view the **IP address** and other information about the Windows defense machine remotely.
 
-**Meterpreter shell**
+![Meterpreter shell from the attack machine](assets/connecttest.png)
+*Meterpreter shell*
 
 The primary goal of this lab was to detect and monitor the simulated threat. I used **Splunk** to generate the telemetry and analyze the logs.
 
 In **Splunk**, I was able to see the attack carried out via **RDP port 3389**, with the default **Meterpreter port 4444**.
 
-**Splunk Log of the RDP Attack via Port 3389**
+![Splunk Log of the RDP Attack via Port 3389](assets/splunkimg1.png)
+*Splunk Log of the RDP Attack via Port 3389*
 
 The logs also displayed the **IP addresses** of both machines involved in the communication.
 
-**Splunk log showing the IP address of both machines**
+![Splunk log showing the IP address of both machines](assets/splunkimg2.png)
+*Splunk log showing the IP address of both machines*
 
 I queried the name of the malware in **Splunk**, revealing **13 events**. Expanding on the first event, I could see the **parent image**, the **malware name**, and the **parent ID**, which could be useful for further analysis.
 
-**EventCode on Splunk**  
-**Event 1 information**
+![EventCode on Splunk](assets/eventcode.png)
+*EventCode on Splunk* 
+
+![Event 1 information](assets/eventdetails.png)
+*Event 1 information*
 
 ## Reflecting as a Cybersecurity Analyst
 
