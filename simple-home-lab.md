@@ -14,6 +14,7 @@ The first tool I installed was **Splunk**, a widely-used SIEM (Security Informat
 Next, I installed **Sysmon** to capture telemetry on the Windows machine. With everything in place, I was ready to simulate an attack.
 
 ![Sysmon installation successful](assets/sysmon.png)
+
 *Sysmon successfully installed* 
 
 ![Sysmon running on my windows services](assets/sysmonrun.png)
