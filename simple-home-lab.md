@@ -55,7 +55,7 @@ Then I headed back to my **Kali Linux** to see if there was a connection and, gu
 
 Returning to my **Kali Linux**, I confirmed that the **reverse TCP shell** was successfully created. I could view the **IP address** and other information about the Windows defense machine remotely.
 
-![Meterpreter shell from the attack machine](assets/connecttest.png)
+![Meterpreter shell from the attack machine](assets/connectest.png)
 *Meterpreter shell*
 
 The primary goal of this lab was to detect and monitor the simulated threat. I used **Splunk** to generate the telemetry and analyze the logs.
@@ -78,7 +78,6 @@ I queried the name of the malware in **Splunk**, revealing **13 events**. Expand
 ![Event 1 information](assets/eventdetails.png)
 *Event 1 information*
 
-## Reflecting as a Cybersecurity Analyst
 
 As a cybersecurity analyst, I have to ask myself: **How can I effectively detect malicious activity like this, and what actions should I take to mitigate such threats?**
 
